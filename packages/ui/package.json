@@ -8,17 +8,27 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@expo-google-fonts/poppins": "^0.4.1",
+    "@rn-primitives/accordion": "^1.5.2",
+    "@rn-primitives/alert-dialog": "^1.5.2",
+    "@rn-primitives/aspect-ratio": "^1.5.2",
+    "@rn-primitives/avatar": "^1.5.2",
+    "@rn-primitives/dialog": "^1.5.2",
     "@rn-primitives/portal": "~1.4.0",
+    "@rn-primitives/separator": "^1.5.2",
     "@rn-primitives/slot": "^1.5.2",
+    "@rn-primitives/tabs": "^1.5.2",
     "@ths/tokens": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "expo-font": "~56.0.7",
     "lucide-react-native": "^1.21.0",
     "tailwind-merge": "^3.5.0"
   },
   "peerDependencies": {
     "nativewind": "*",
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-safe-area-context": "*"
   }
 }

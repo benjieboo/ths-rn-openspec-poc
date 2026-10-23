@@ -5,97 +5,99 @@ import { Platform, Pressable } from 'react-native';
 
 const buttonVariants = cva(
   cn(
-    'group shrink-0 flex-row items-center justify-center gap-2 rounded-md shadow-none',
+    'group shrink-0 flex-row items-center justify-center gap-2 rounded-md',
     Platform.select({
-      web: "focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive whitespace-nowrap outline-none transition-all focus-visible:ring-[3px] disabled:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+      web: "outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none whitespace-nowrap [&_svg]:pointer-events-none [&_svg]:shrink-0",
     })
   ),
   {
     variants: {
       variant: {
-        default: cn(
-          'bg-primary active:bg-primary/90 shadow-sm shadow-black/5',
-          Platform.select({ web: 'hover:bg-primary/90' })
+        default: cn('bg-primary active:bg-primary-hover', Platform.select({ web: 'hover:bg-primary-hover' })),
+        accent: cn(
+          'bg-accent-cta active:bg-accent-cta-hover',
+          Platform.select({ web: 'hover:bg-accent-cta-hover' })
         ),
         destructive: cn(
-          'bg-destructive active:bg-destructive/90 dark:bg-destructive/60 shadow-sm shadow-black/5',
-          Platform.select({
-            web: 'hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40',
-          })
+          'bg-destructive active:bg-destructive-hover',
+          Platform.select({ web: 'hover:bg-destructive-hover' })
         ),
         outline: cn(
-          'border-border bg-background active:bg-accent dark:bg-input/30 dark:border-input dark:active:bg-input/50 border shadow-sm shadow-black/5',
-          Platform.select({
-            web: 'hover:bg-accent dark:hover:bg-input/50',
-          })
+          'border border-foreground bg-background active:bg-secondary',
+          Platform.select({ web: 'hover:bg-secondary' })
         ),
-        secondary: cn(
-          'bg-secondary active:bg-secondary/80 shadow-sm shadow-black/5',
-          Platform.select({ web: 'hover:bg-secondary/80' })
-        ),
-        ghost: cn(
-          'active:bg-accent dark:active:bg-accent/50',
-          Platform.select({ web: 'hover:bg-accent dark:hover:bg-accent/50' })
-        ),
+        secondary: cn('bg-brand-subtle active:bg-brand-subtle/70', Platform.select({ web: 'hover:bg-brand-subtle/70' })),
+        ghost: cn('active:bg-secondary', Platform.select({ web: 'hover:bg-secondary' })),
         link: '',
       },
+      // THS minimum touch target is 44pt, so sm is 44 tall rather than shadcn's 32.
       size: {
-        default: cn('h-10 px-4 py-2 sm:h-9', Platform.select({ web: 'has-[>svg]:px-3' })),
-        sm: cn('h-9 gap-1.5 rounded-md px-3 sm:h-8', Platform.select({ web: 'has-[>svg]:px-2.5' })),
-        lg: cn('h-11 rounded-md px-6 sm:h-10', Platform.select({ web: 'has-[>svg]:px-4' })),
-        icon: 'h-10 w-10 sm:h-9 sm:w-9',
+        default: 'h-12 px-6',
+        sm: 'h-11 px-4',
+        lg: 'h-14 px-8',
+        icon: 'size-11',
+      },
+      disabled: {
+        true: '',
+        false: '',
       },
     },
+    compoundVariants: [
+      { variant: ['default', 'accent', 'destructive', 'outline', 'secondary'], disabled: true, className: 'border-transparent bg-disabled-surface' },
+    ],
     defaultVariants: {
       variant: 'default',
       size: 'default',
+      disabled: false,
     },
   }
 );
 
 const buttonTextVariants = cva(
-  cn(
-    'text-foreground text-sm font-medium',
-    Platform.select({ web: 'pointer-events-none transition-colors' })
-  ),
+  cn('text-base font-semibold text-foreground', Platform.select({ web: 'pointer-events-none transition-colors' })),
   {
     variants: {
       variant: {
         default: 'text-primary-foreground',
-        destructive: 'text-white',
-        outline: cn(
-          'group-active:text-accent-foreground',
-          Platform.select({ web: 'group-hover:text-accent-foreground' })
-        ),
-        secondary: 'text-secondary-foreground',
-        ghost: 'group-active:text-accent-foreground',
-        link: cn(
-          'text-primary group-active:underline',
-          Platform.select({ web: 'underline-offset-4 hover:underline group-hover:underline' })
-        ),
+        accent: 'text-primary-foreground',
+        destructive: 'text-destructive-foreground',
+        outline: '',
+        secondary: '',
+        ghost: '',
+        link: cn('underline', Platform.select({ web: 'underline-offset-4 group-hover:opacity-80' })),
       },
       size: {
         default: '',
-        sm: '',
-        lg: '',
+        sm: 'text-sm',
+        lg: 'text-lg',
         icon: '',
+      },
+      disabled: {
+        true: 'text-disabled',
+        false: '',
       },
     },
     defaultVariants: {
       variant: 'default',
       size: 'default',
+      disabled: false,
     },
   }
 );
 
-type ButtonProps = React.ComponentProps<typeof Pressable> & React.RefAttributes<typeof Pressable> & VariantProps<typeof buttonVariants>;
+type ButtonProps = React.ComponentProps<typeof Pressable> &
+  React.RefAttributes<typeof Pressable> &
+  Omit<VariantProps<typeof buttonVariants>, 'disabled'>;
 
-function Button({ className, variant, size, ...props }: ButtonProps) {
+function Button({ className, variant, size, disabled, ...props }: ButtonProps) {
+  const isDisabled = !!disabled;
   return (
-    <TextClassContext.Provider value={buttonTextVariants({ variant, size })}>
+    <TextClassContext.Provider value={buttonTextVariants({ variant, size, disabled: isDisabled })}>
       <Pressable
-        className={cn(props.disabled && 'opacity-50', buttonVariants({ variant, size }), className)}
+        className={cn(buttonVariants({ variant, size, disabled: isDisabled }), className)}
         role="button"
+        disabled={disabled}
+        aria-disabled={isDisabled}
         {...props}
       />
     </TextClassContext.Provider>

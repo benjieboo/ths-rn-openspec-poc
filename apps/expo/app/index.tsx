@@ -1,24 +1,28 @@
-import { Button, Icon, Text } from '@ths/ui';
-import { Stack } from 'expo-router';
-import { PawPrintIcon } from 'lucide-react-native';
+import { ActionListRow, Text } from '@ths/ui';
+import { Stack, useRouter } from 'expo-router';
 import { Platform, View } from 'react-native';
 
-// Phase 0 smoke test: one route file, rendered natively and as a web page.
-export default function HelloScreen() {
+export default function HomeScreen() {
+  const router = useRouter();
   return (
     <>
       <Stack.Screen options={{ title: 'THS Listing POC' }} />
-      <View className="flex-1 items-center justify-center gap-6 bg-background p-6">
-        <Icon as={PawPrintIcon} className="size-12 text-primary" />
-        <View className="items-center gap-2">
-          <Text variant="h3">Hello from one route file</Text>
-          <Text className="text-center text-muted-foreground" testID="platform-label">
-            Rendering on {Platform.OS} · components from @ths/ui
-          </Text>
+      <View className="flex-1 bg-background p-6">
+        <View className="w-full max-w-xl gap-6 self-center">
+          <View className="gap-2">
+            <Text variant="h1">THS Listing POC</Text>
+            <Text variant="lead">One React Native codebase for app and web, driven by OpenSpec.</Text>
+            <Text variant="caption">Rendering on {Platform.OS}</Text>
+          </View>
+          <View>
+            <ActionListRow
+              label="Design system"
+              description="Every @ths/ui component, from one route"
+              onPress={() => router.push('/design-system')}
+              last
+            />
+          </View>
         </View>
-        <Button onPress={() => {}}>
-          <Text>Design system button</Text>
-        </Button>
       </View>
     </>
   );

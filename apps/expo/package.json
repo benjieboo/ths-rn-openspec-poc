@@ -11,7 +11,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@rn-primitives/portal": "~1.4.0",
     "@ths/tokens": "workspace:*",
     "@ths/ui": "workspace:*",
     "expo": "~56.0.13",

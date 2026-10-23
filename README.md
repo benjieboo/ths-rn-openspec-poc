@@ -24,10 +24,12 @@ pnpm install
 pnpm dev                      # Expo dev server on :8090
 ```
 
-- Web: http://localhost:8090
+- Web: http://localhost:8090 (design system showcase: http://localhost:8090/design-system)
 - iOS: `pnpm --filter @ths/expo exec expo run:ios --port 8090` (dev client; SDK 56)
 
 Port 8090 is used so this doesn't collide with the main THS app's Metro on 8081.
+If CocoaPods fails with a Unicode error, run with `LANG=en_US.UTF-8`.
+After changing `packages/tokens/tailwind-preset.js`, restart Metro with `--clear`.
 
 ## Adding design system components
 
@@ -51,7 +53,7 @@ CLI: `npx openspec list`, `npx openspec validate --strict`.
 ## Phases
 
 - [x] 0. Scaffold: monorepo, Expo Router, NativeWind, Reusables, OpenSpec, hello route on iOS + web
-- [ ] 1. Design system themed as THS + Listing composites + DS spec
+- [x] 1. Design system themed as THS + Listing composites + DS spec (`/design-system` showcase)
 - [ ] 2. Mock API + contract
 - [ ] 3. Listing spec (review gate)
 - [ ] 4. Generate the Listing from the spec

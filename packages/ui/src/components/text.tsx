@@ -5,35 +5,22 @@ import * as React from 'react';
 import { Platform, Text as RNText, type Role } from 'react-native';
 
 const textVariants = cva(
-  cn(
-    'text-foreground text-base',
-    Platform.select({
-      web: 'select-text',
-    })
-  ),
+  cn('text-base text-foreground', Platform.select({ web: 'select-text' })),
   {
     variants: {
       variant: {
         default: '',
-        h1: cn(
-          'text-center text-4xl font-extrabold tracking-tight',
-          Platform.select({ web: 'scroll-m-20 text-balance' })
-        ),
-        h2: cn(
-          'border-border border-b pb-2 text-3xl font-semibold tracking-tight',
-          Platform.select({ web: 'scroll-m-20 first:mt-0' })
-        ),
-        h3: cn('text-2xl font-semibold tracking-tight', Platform.select({ web: 'scroll-m-20' })),
-        h4: cn('text-xl font-semibold tracking-tight', Platform.select({ web: 'scroll-m-20' })),
-        p: 'mt-3 leading-7 sm:mt-6',
-        blockquote: 'mt-4 border-l-2 pl-3 italic sm:mt-6 sm:pl-6',
-        code: cn(
-          'bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold'
-        ),
-        lead: 'text-muted-foreground text-xl',
-        large: 'text-lg font-semibold',
-        small: 'text-sm font-medium leading-none',
-        muted: 'text-muted-foreground text-sm',
+        body: '',
+        h1: 'text-4xl font-bold text-heading',
+        h2: 'text-2xl font-semibold text-heading',
+        h3: 'text-xl font-semibold',
+        h4: 'text-lg font-medium',
+        lead: 'text-lg text-subtle',
+        small: 'text-sm',
+        caption: 'text-xs text-subtle',
+        label: 'text-sm font-semibold',
+        muted: 'text-sm text-subtle',
+        link: cn('font-semibold underline', Platform.select({ web: 'underline-offset-4 hover:opacity-80' })),
       },
     },
     defaultVariants: {
@@ -51,8 +38,6 @@ const ROLE: Partial<Record<TextVariant, Role>> = {
   h2: 'heading',
   h3: 'heading',
   h4: 'heading',
-  blockquote: Platform.select({ web: 'blockquote' as Role }),
-  code: Platform.select({ web: 'code' as Role }),
 };
 
 const ARIA_LEVEL: Partial<Record<TextVariant, string>> = {
@@ -63,6 +48,25 @@ const ARIA_LEVEL: Partial<Record<TextVariant, string>> = {
 };
 
 const TextClassContext = React.createContext<string | undefined>(undefined);
+
+// Poppins ships one family per weight; map the weight class to its family so the right face
+// renders on native as well as web. Classes must stay literal for Tailwind to generate them.
+const WEIGHT_FAMILY = {
+  normal: 'font-poppins-normal',
+  medium: 'font-poppins-medium',
+  semibold: 'font-poppins-semibold',
+  bold: 'font-poppins-bold',
+  extrabold: 'font-poppins-extrabold',
+} as const;
+
+function withFontFamily(className: string) {
+  let weight: keyof typeof WEIGHT_FAMILY = 'normal';
+  for (const token of className.split(/\s+/)) {
+    const name = token.slice(5);
+    if (token.startsWith('font-') && name in WEIGHT_FAMILY) weight = name as keyof typeof WEIGHT_FAMILY;
+  }
+  return cn(className, WEIGHT_FAMILY[weight]);
+}
 
 function Text({
   className,
@@ -78,7 +82,7 @@ function Text({
   const Component = asChild ? Slot : RNText;
   return (
     <Component
-      className={cn(textVariants({ variant }), textClass, className)}
+      className={withFontFamily(cn(textVariants({ variant }), textClass, className))}
       role={variant ? ROLE[variant] : undefined}
       aria-level={variant ? ARIA_LEVEL[variant] : undefined}
       {...props}
