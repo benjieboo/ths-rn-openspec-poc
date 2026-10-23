@@ -4,8 +4,11 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
 import { Platform, Text as RNText, type Role } from 'react-native';
 
-const textVariants = cva(
-  cn('text-base text-foreground', Platform.select({ web: 'select-text' })),
+// Order matters: base, then the inherited context (e.g. a Button's text colour), then the
+// variant, then className. So an explicit variant inside a Button still wins over the context.
+const TEXT_BASE = cn('text-base text-foreground', Platform.select({ web: 'select-text' }));
+
+const textVariants = cva('',
   {
     variants: {
       variant: {
@@ -15,11 +18,11 @@ const textVariants = cva(
         h2: 'text-2xl font-semibold text-heading',
         h3: 'text-xl font-semibold',
         h4: 'text-lg font-medium',
-        lead: 'text-lg text-subtle',
-        small: 'text-sm',
-        caption: 'text-xs text-subtle',
+        lead: 'text-lg font-normal text-subtle',
+        small: 'text-sm font-normal',
+        caption: 'text-xs font-normal text-subtle',
         label: 'text-sm font-semibold',
-        muted: 'text-sm text-subtle',
+        muted: 'text-sm font-normal text-subtle',
         link: cn('font-semibold underline', Platform.select({ web: 'underline-offset-4 hover:opacity-80' })),
       },
     },
@@ -82,7 +85,7 @@ function Text({
   const Component = asChild ? Slot : RNText;
   return (
     <Component
-      className={withFontFamily(cn(textVariants({ variant }), textClass, className))}
+      className={withFontFamily(cn(TEXT_BASE, textClass, textVariants({ variant }), className))}
       role={variant ? ROLE[variant] : undefined}
       aria-level={variant ? ARIA_LEVEL[variant] : undefined}
       {...props}

@@ -11,6 +11,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.104.5",
+    "@ths/api-contract": "workspace:*",
     "@ths/tokens": "workspace:*",
     "@ths/ui": "workspace:*",
     "expo": "~56.0.13",

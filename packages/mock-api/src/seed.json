@@ -1,0 +1,675 @@
+{
+  "listings": [
+    {
+      "listing": {
+        "id": "2001",
+        "title": "Sunny Plateau flat with a cat who loves the balcony",
+        "introduction": "Hi, I'm Camille! I teach at a nearby university and I'm looking for a kind sitter for my cat Pickle and my flat while I travel to see family.",
+        "location": {
+          "neighbourhood": "Plateau-Mont-Royal",
+          "city": "Montréal",
+          "region": "QC",
+          "country": "Canada",
+          "countryCode": "CA",
+          "approximateCoordinates": {
+            "lat": 45.5236,
+            "lon": -73.5822
+          }
+        },
+        "photos": [
+          {
+            "id": "2001-ph1",
+            "url": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&q=80&auto=format&fit=crop",
+            "alt": "Bright living room with a big window"
+          },
+          {
+            "id": "2001-ph2",
+            "url": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200&q=80&auto=format&fit=crop",
+            "alt": "Open-plan lounge"
+          },
+          {
+            "id": "2001-ph3",
+            "url": "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=1200&q=80&auto=format&fit=crop",
+            "alt": "Reading corner with plants"
+          },
+          {
+            "id": "2001-ph4",
+            "url": "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1200&q=80&auto=format&fit=crop",
+            "alt": "Bedroom with fresh linen"
+          },
+          {
+            "id": "2001-ph5",
+            "url": "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&q=80&auto=format&fit=crop",
+            "alt": "Kitchen with a breakfast bar"
+          },
+          {
+            "id": "2001-ph6",
+            "url": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80&auto=format&fit=crop",
+            "alt": "Fully equipped kitchen"
+          },
+          {
+            "id": "2001-ph7",
+            "url": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80&auto=format&fit=crop",
+            "alt": "Dining area"
+          },
+          {
+            "id": "2001-ph8",
+            "url": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&q=80&auto=format&fit=crop",
+            "alt": "Living room in the afternoon light"
+          },
+          {
+            "id": "2001-ph9",
+            "url": "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1200&q=80&auto=format&fit=crop",
+            "alt": "Spare room with a desk"
+          },
+          {
+            "id": "2001-ph10",
+            "url": "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=1200&q=80&auto=format&fit=crop",
+            "alt": "Sofa by the balcony door"
+          }
+        ],
+        "home": {
+          "description": "Welcome to my home! It's a bright, top-floor one-bedroom apartment with plenty of natural light and two balconies, one at the front and one at the back, where you can start your morning or unwind in the evening. The neighbourhood is full of cafés, bakeries and parks, and the metro is a five-minute walk away. There's a spare room with a proper desk if you're working remotely, and fast wifi throughout.",
+          "type": "apartment",
+          "setting": "city",
+          "publicTransport": true,
+          "carIncluded": false
+        },
+        "owner": {
+          "id": "mem_501",
+          "firstName": "Camille",
+          "photoUrl": "https://i.pravatar.cc/160?img=47",
+          "verified": true,
+          "memberSince": "2021-03-14"
+        }
+      },
+      "assignments": [
+        {
+          "id": "as_2001_1",
+          "startDate": "2026-12-20",
+          "endDate": "2026-12-27",
+          "isReviewing": false
+        },
+        {
+          "id": "as_2001_2",
+          "startDate": "2027-02-10",
+          "endDate": "2027-02-24",
+          "isReviewing": false
+        },
+        {
+          "id": "as_2001_3",
+          "startDate": "2027-04-02",
+          "endDate": "2027-04-09",
+          "isReviewing": true
+        }
+      ],
+      "pets": [
+        {
+          "id": "pet_2001_1",
+          "name": "Pickle",
+          "species": "cat",
+          "breed": "Domestic shorthair",
+          "ageYears": 3,
+          "photoUrl": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&q=80&auto=format&fit=crop",
+          "about": "Shy for a day, then the most affectionate lap cat. Loves the back balcony and a treat after playtime."
+        }
+      ],
+      "amenities": {
+        "highlights": [
+          "essentials-0",
+          "comfort-1",
+          "comfort-2",
+          "essentials-2",
+          "comfort-0"
+        ],
+        "categories": [
+          {
+            "id": "essentials",
+            "name": "Essentials",
+            "amenities": [
+              {
+                "id": "essentials-0",
+                "label": "Wifi",
+                "detail": "High-speed"
+              },
+              {
+                "id": "essentials-1",
+                "label": "Heating",
+                "detail": null
+              },
+              {
+                "id": "essentials-2",
+                "label": "Air conditioning",
+                "detail": null
+              },
+              {
+                "id": "essentials-3",
+                "label": "Washing machine",
+                "detail": null
+              },
+              {
+                "id": "essentials-4",
+                "label": "Dishwasher",
+                "detail": null
+              }
+            ]
+          },
+          {
+            "id": "comfort",
+            "name": "Comfort",
+            "amenities": [
+              {
+                "id": "comfort-0",
+                "label": "TV",
+                "detail": "Streaming services"
+              },
+              {
+                "id": "comfort-1",
+                "label": "Balcony",
+                "detail": "Front and back"
+              },
+              {
+                "id": "comfort-2",
+                "label": "Dedicated workspace",
+                "detail": "Desk"
+              },
+              {
+                "id": "comfort-3",
+                "label": "Coffee machine",
+                "detail": null
+              },
+              {
+                "id": "comfort-4",
+                "label": "Bathtub",
+                "detail": null
+              }
+            ]
+          },
+          {
+            "id": "outdoors",
+            "name": "Outdoors & access",
+            "amenities": [
+              {
+                "id": "outdoors-0",
+                "label": "Bike storage",
+                "detail": null
+              },
+              {
+                "id": "outdoors-1",
+                "label": "Park nearby",
+                "detail": "5 min walk"
+              },
+              {
+                "id": "outdoors-2",
+                "label": "Metro nearby",
+                "detail": "5 min walk"
+              }
+            ]
+          },
+          {
+            "id": "kitchen",
+            "name": "Kitchen",
+            "amenities": [
+              {
+                "id": "kitchen-0",
+                "label": "Oven",
+                "detail": null
+              },
+              {
+                "id": "kitchen-1",
+                "label": "Microwave",
+                "detail": null
+              },
+              {
+                "id": "kitchen-2",
+                "label": "Kettle",
+                "detail": null
+              }
+            ]
+          }
+        ]
+      },
+      "responsibilities": {
+        "pets": [
+          {
+            "petId": "pet_2001_1",
+            "petName": "Pickle",
+            "timeAlone": "over_6h",
+            "medication": {
+              "required": false,
+              "note": null
+            },
+            "notes": "Fed once a day in the evening, plus a treat after playing. Clear the litter box every two days."
+          }
+        ],
+        "home": [
+          {
+            "area": "plants",
+            "description": "Water the indoor plants twice a week. We'll water them before we leave."
+          },
+          {
+            "area": "home",
+            "description": "Put the recycling out on Tuesday mornings."
+          }
+        ]
+      },
+      "sitEssentials": {
+        "dates": [
+          {
+            "assignmentId": "as_2001_1",
+            "arrival": {
+              "time": null,
+              "note": "To be agreed later"
+            },
+            "departure": {
+              "time": null,
+              "note": "To be agreed later"
+            }
+          },
+          {
+            "assignmentId": "as_2001_2",
+            "arrival": {
+              "time": "15:00",
+              "note": null
+            },
+            "departure": {
+              "time": "11:00",
+              "note": null
+            }
+          },
+          {
+            "assignmentId": "as_2001_3",
+            "arrival": {
+              "time": null,
+              "note": "To be agreed later"
+            },
+            "departure": {
+              "time": null,
+              "note": "To be agreed later"
+            }
+          }
+        ],
+        "guests": {
+          "allowed": true,
+          "requiresApproval": true
+        },
+        "sitterPetsAllowed": false
+      },
+      "reviews": [
+        {
+          "id": "rv1",
+          "reviewer": {
+            "firstName": "Priya",
+            "photoUrl": "https://i.pravatar.cc/160?img=5"
+          },
+          "text": "We had a lovely stay with Pickle! She's shy to begin with, but after a day of hiding under the bed she decided we were acceptable and became the sweetest lap cat. The flat is bright and spotless, and Camille's house guide made settling in effortless.",
+          "stayStart": "2026-06-24",
+          "stayEnd": "2026-07-20"
+        },
+        {
+          "id": "rv2",
+          "reviewer": {
+            "firstName": "Tom",
+            "photoUrl": "https://i.pravatar.cc/160?img=12"
+          },
+          "text": "A calm, happy week in a beautiful neighbourhood. Pickle is a joy.",
+          "stayStart": "2026-05-22",
+          "stayEnd": "2026-06-05"
+        },
+        {
+          "id": "rv3",
+          "reviewer": {
+            "firstName": "Lena",
+            "photoUrl": "https://i.pravatar.cc/160?img=9"
+          },
+          "text": "Camille was so welcoming. We had a video call before the sit, she left fresh coffee and a list of her favourite bakeries, and checked in just enough. Pickle wakes you at 6am for breakfast, so set your expectations accordingly!",
+          "stayStart": "2026-04-04",
+          "stayEnd": "2026-04-07"
+        },
+        {
+          "id": "rv4",
+          "reviewer": {
+            "firstName": "Marcus",
+            "photoUrl": null
+          },
+          "text": "Great location, everything within walking distance. The balconies are perfect for morning coffee. Would sit again in a heartbeat.",
+          "stayStart": "2026-02-11",
+          "stayEnd": "2026-02-25"
+        },
+        {
+          "id": "rv5",
+          "reviewer": {
+            "firstName": "Aiko",
+            "photoUrl": "https://i.pravatar.cc/160?img=16"
+          },
+          "text": "My first sit and it couldn't have gone better. Clear instructions, a cosy home and a very affectionate cat once she warms up.",
+          "stayStart": "2025-12-20",
+          "stayEnd": "2025-12-27"
+        },
+        {
+          "id": "rv6",
+          "reviewer": {
+            "firstName": "Sofia",
+            "photoUrl": "https://i.pravatar.cc/160?img=20"
+          },
+          "text": "Pickle and I spent many evenings watching the street from the back balcony. The flat has everything you need and Camille is a thoughtful host.",
+          "stayStart": "2025-10-03",
+          "stayEnd": "2025-10-12"
+        },
+        {
+          "id": "rv7",
+          "reviewer": {
+            "firstName": "Daniel",
+            "photoUrl": "https://i.pravatar.cc/160?img=33"
+          },
+          "text": "Lovely home, lovely cat, lovely host. The neighbourhood cafés are a highlight.",
+          "stayStart": "2025-08-15",
+          "stayEnd": "2025-08-29"
+        },
+        {
+          "id": "rv8",
+          "reviewer": {
+            "firstName": "Hannah",
+            "photoUrl": null
+          },
+          "text": "Everything was exactly as described. Pickle is low-maintenance and full of personality. Thank you for trusting us with her!",
+          "stayStart": "2025-07-05",
+          "stayEnd": "2025-07-13"
+        },
+        {
+          "id": "rv9",
+          "reviewer": {
+            "firstName": "Kwame",
+            "photoUrl": "https://i.pravatar.cc/160?img=59"
+          },
+          "text": "Spotless apartment and a very sweet cat. The desk in the spare room was perfect for working remotely.",
+          "stayStart": "2025-05-01",
+          "stayEnd": "2025-05-09"
+        },
+        {
+          "id": "rv10",
+          "reviewer": {
+            "firstName": "Elena",
+            "photoUrl": "https://i.pravatar.cc/160?img=32"
+          },
+          "text": "Second time sitting for Camille and Pickle remembered me! That alone made my week.",
+          "stayStart": "2025-03-14",
+          "stayEnd": "2025-03-20"
+        },
+        {
+          "id": "rv11",
+          "reviewer": {
+            "firstName": "Noor",
+            "photoUrl": "https://i.pravatar.cc/160?img=44"
+          },
+          "text": "Cosy, quiet and full of light. Pickle is a gentle soul.",
+          "stayStart": "2025-01-10",
+          "stayEnd": "2025-01-17"
+        },
+        {
+          "id": "rv12",
+          "reviewer": {
+            "firstName": "Owen",
+            "photoUrl": null
+          },
+          "text": "A wonderful introduction to the city. Camille's recommendations were spot on.",
+          "stayStart": "2024-11-02",
+          "stayEnd": "2024-11-10"
+        }
+      ]
+    },
+    {
+      "listing": {
+        "id": "2002",
+        "title": "Garden house near the coast with two happy dogs",
+        "introduction": "Olá! We're Rui and family. Our two dogs, Bolo and Nata, love long walks and longer naps. We'd love a sitter who enjoys the outdoors.",
+        "location": {
+          "neighbourhood": "Parede",
+          "city": "Cascais",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "countryCode": "PT",
+          "approximateCoordinates": {
+            "lat": 38.689,
+            "lon": -9.354
+          }
+        },
+        "photos": [
+          {
+            "id": "2002-ph1",
+            "url": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80&auto=format&fit=crop",
+            "alt": "House exterior"
+          },
+          {
+            "id": "2002-ph2",
+            "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80&auto=format&fit=crop",
+            "alt": "Garden and patio"
+          },
+          {
+            "id": "2002-ph3",
+            "url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80&auto=format&fit=crop",
+            "alt": "Front of the house at dusk"
+          },
+          {
+            "id": "2002-ph4",
+            "url": "https://images.unsplash.com/photo-1567016432779-094069958ea5?w=1200&q=80&auto=format&fit=crop",
+            "alt": "Living room"
+          },
+          {
+            "id": "2002-ph5",
+            "url": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200&q=80&auto=format&fit=crop",
+            "alt": "Lounge with a view"
+          },
+          {
+            "id": "2002-ph6",
+            "url": "https://images.unsplash.com/photo-1505691723518-36a5ac3be353?w=1200&q=80&auto=format&fit=crop",
+            "alt": "Main bedroom"
+          },
+          {
+            "id": "2002-ph7",
+            "url": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80&auto=format&fit=crop",
+            "alt": "Kitchen"
+          }
+        ],
+        "home": {
+          "description": "A family house with a fenced garden, a sunny patio and the beach a short drive away. The train to Lisbon is a ten-minute walk.",
+          "type": "house",
+          "setting": "beach",
+          "publicTransport": true,
+          "carIncluded": true
+        },
+        "owner": {
+          "id": "mem_502",
+          "firstName": "Rui",
+          "photoUrl": "https://i.pravatar.cc/160?img=51",
+          "verified": false,
+          "memberSince": "2023-06-01"
+        }
+      },
+      "assignments": [
+        {
+          "id": "as_2002_1",
+          "startDate": "2027-01-08",
+          "endDate": "2027-01-22",
+          "isReviewing": false
+        }
+      ],
+      "pets": [
+        {
+          "id": "pet_2002_1",
+          "name": "Bolo",
+          "species": "dog",
+          "breed": "Beagle",
+          "ageYears": 6,
+          "photoUrl": "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=600&q=80&auto=format&fit=crop",
+          "about": "Food-motivated, gentle with everyone."
+        },
+        {
+          "id": "pet_2002_2",
+          "name": "Nata",
+          "species": "dog",
+          "breed": "Mixed breed",
+          "ageYears": 4,
+          "photoUrl": null,
+          "about": "Energetic and loves the beach."
+        }
+      ],
+      "amenities": {
+        "highlights": [
+          "outdoors-0",
+          "essentials-0",
+          "outdoors-2",
+          "outdoors-3",
+          "outdoors-1"
+        ],
+        "categories": [
+          {
+            "id": "essentials",
+            "name": "Essentials",
+            "amenities": [
+              {
+                "id": "essentials-0",
+                "label": "Wifi",
+                "detail": null
+              },
+              {
+                "id": "essentials-1",
+                "label": "Heating",
+                "detail": null
+              },
+              {
+                "id": "essentials-2",
+                "label": "Washing machine",
+                "detail": null
+              }
+            ]
+          },
+          {
+            "id": "outdoors",
+            "name": "Outdoors & access",
+            "amenities": [
+              {
+                "id": "outdoors-0",
+                "label": "Garden",
+                "detail": "Fenced"
+              },
+              {
+                "id": "outdoors-1",
+                "label": "Patio",
+                "detail": null
+              },
+              {
+                "id": "outdoors-2",
+                "label": "Beach nearby",
+                "detail": "10 min drive"
+              },
+              {
+                "id": "outdoors-3",
+                "label": "Parking",
+                "detail": "Driveway"
+              }
+            ]
+          }
+        ]
+      },
+      "responsibilities": {
+        "pets": [
+          {
+            "petId": "pet_2002_1",
+            "petName": "Bolo",
+            "timeAlone": "up_to_4h",
+            "medication": {
+              "required": true,
+              "note": "Joint supplement with breakfast."
+            },
+            "notes": "Two walks a day."
+          },
+          {
+            "petId": "pet_2002_2",
+            "petName": "Nata",
+            "timeAlone": "up_to_4h",
+            "medication": {
+              "required": false,
+              "note": null
+            },
+            "notes": "Two walks a day, one long."
+          }
+        ],
+        "home": [
+          {
+            "area": "garden",
+            "description": "Water the vegetable beds every evening in dry weather."
+          }
+        ]
+      },
+      "sitEssentials": {
+        "dates": [
+          {
+            "assignmentId": "as_2002_1",
+            "arrival": {
+              "time": "16:00",
+              "note": null
+            },
+            "departure": {
+              "time": "10:00",
+              "note": null
+            }
+          }
+        ],
+        "guests": {
+          "allowed": false,
+          "requiresApproval": false
+        },
+        "sitterPetsAllowed": true
+      },
+      "reviews": [
+        {
+          "id": "rv101",
+          "reviewer": {
+            "firstName": "Clara",
+            "photoUrl": "https://i.pravatar.cc/160?img=25"
+          },
+          "text": "Bolo and Nata are the best walking companions. A beautiful, peaceful home.",
+          "stayStart": "2026-03-01",
+          "stayEnd": "2026-03-15"
+        },
+        {
+          "id": "rv102",
+          "reviewer": {
+            "firstName": "Sam",
+            "photoUrl": null
+          },
+          "text": "Fantastic sit. The garden is a dream and the dogs are so well behaved.",
+          "stayStart": "2025-09-10",
+          "stayEnd": "2025-09-20"
+        }
+      ]
+    }
+  ],
+  "viewers": {
+    "anonymous": {
+      "memberId": null,
+      "firstName": null,
+      "membership": "anonymous",
+      "canApply": false
+    },
+    "partial-member": {
+      "memberId": "mem_900",
+      "firstName": "Alex",
+      "membership": "partial",
+      "canApply": false
+    },
+    "full-sitter": {
+      "memberId": "mem_901",
+      "firstName": "Jordan",
+      "membership": "full",
+      "canApply": true
+    },
+    "own-listing": {
+      "memberId": "mem_501",
+      "firstName": "Camille",
+      "membership": "full",
+      "canApply": true
+    }
+  }
+}
