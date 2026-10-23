@@ -1,0 +1,9 @@
+node_modules
+.turbo
+dist
+.expo
+web-build
+ios
+android
+*.log
+.DS_Store

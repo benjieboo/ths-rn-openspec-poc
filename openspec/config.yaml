@@ -1,0 +1,34 @@
+schema: spec-driven
+
+context: |
+  Product: TrustedHousesitters (THS) proof of concept. One React Native codebase renders
+  native iOS/Android and React Native Web from the same Expo Router route files.
+  Specs describe what the member sees and does, never how the legacy THS app is built.
+
+  Stack: Expo + Expo Router, NativeWind v4, React Native Reusables (shadcn for RN),
+  TanStack Query, zod, Hono mock API. TypeScript strict. pnpm + Turborepo monorepo.
+
+  Packages: apps/expo (routes only), packages/ui (design system), packages/tokens
+  (theme.css + Tailwind preset), packages/api-contract (zod schemas, typed client),
+  packages/mock-api (Hono server + seed.json).
+
+  Constraints an agent cannot infer:
+  - Screens compose packages/ui components only. Missing UI goes into packages/ui
+    (and specs/design-system) first, never as one-off styling in a route.
+  - No platform-forked screen files. .web.tsx/.native.tsx only inside packages/ui
+    primitives, with a comment saying why.
+  - Layout adapts by breakpoint: mobile (native and narrow web) uses the app pattern;
+    desktop web (>= lg) uses the two-column pattern. Same components, same routes.
+  - Accessibility is a requirement: roles, labels, focus order, 44pt touch targets, WCAG AA contrast.
+  - Seed data is fictional. Never copy real members' names, photos or reviews.
+
+rules:
+  specs:
+    - Every requirement has at least one WHEN/THEN scenario
+    - Cover loading, error and empty states for anything that fetches data
+    - Describe behaviour per membership state where it differs (anonymous, partial member, full sitter)
+  tasks:
+    - Every spec scenario maps to at least one test task
+    - Design system additions come before the screen tasks that use them
+  proposal:
+    - State what is out of scope
