@@ -24,7 +24,7 @@ function AmenityList({ amenities, limit, onShowAll, className }: AmenityListProp
     <View className={cn('gap-4', className)}>
       <View role="list" className="gap-3 lg:flex-row lg:flex-wrap">
         {visible.map((a) => (
-          <View key={a.id} role="listitem" className="flex-row items-center gap-3 lg:w-[48%]">
+          <View key={a.id} role="listitem" testID="amenity-item" className="flex-row items-center gap-3 lg:w-[48%]">
             <Icon as={a.icon ?? CheckIcon} className="text-brand" />
             <Text className="flex-1">
               {a.label}

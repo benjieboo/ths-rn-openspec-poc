@@ -18,7 +18,7 @@ type ReviewCardProps = {
 /** One sitter review with read more and stay dates. */
 function ReviewCard({ reviewerName, reviewerPhotoUrl, text, stayStart, stayEnd, className }: ReviewCardProps) {
   return (
-    <View role="article" className={cn('gap-3 rounded-lg border border-divider bg-card p-5', className)}>
+    <View role="article" testID="review-card" className={cn('gap-3 rounded-lg border border-divider bg-card p-5', className)}>
       <View className="flex-row items-center gap-3">
         <PersonAvatar name={reviewerName} photoUrl={reviewerPhotoUrl} />
         <View className="flex-1">

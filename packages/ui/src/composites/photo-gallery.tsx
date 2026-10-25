@@ -59,7 +59,7 @@ function PhotoCarousel({ photos, onPhotoPress, className }: Omit<PhotoGalleryPro
 
   return (
     // 4:3 on mobile keeps the pets visible (THS photography guidance).
-    <View onLayout={onLayout} className={cn('aspect-[4/3] w-full bg-secondary', className)}>
+    <View onLayout={onLayout} testID="photo-carousel" className={cn('aspect-[4/3] w-full bg-secondary', className)}>
       {width > 0 && (
         <FlatList
           data={photos}

@@ -19,6 +19,16 @@ export default function HomeScreen() {
           </View>
           <View>
             <ActionListRow
+              label="Listing: Sunny Plateau flat"
+              description="Montréal · cat · 12 reviews"
+              onPress={() => router.push({ pathname: '/listing/[id]', params: { id: '2001' } })}
+            />
+            <ActionListRow
+              label="Listing: Garden house near the coast"
+              description="Cascais · 2 dogs · one open date"
+              onPress={() => router.push({ pathname: '/listing/[id]', params: { id: '2002' } })}
+            />
+            <ActionListRow
               label="Design system"
               description="Every @ths/ui component, from one route"
               onPress={() => router.push('/design-system')}

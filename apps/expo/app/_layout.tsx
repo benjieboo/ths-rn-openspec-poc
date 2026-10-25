@@ -34,7 +34,9 @@ export default function RootLayout() {
       <ThemeProvider value={NAV_THEME}>
         <ToastProvider>
           <StatusBar style="dark" />
-          <Stack screenOptions={{ headerTitleStyle: { fontFamily: 'Poppins_600SemiBold' } }} />
+          <Stack screenOptions={{ headerTitleStyle: { fontFamily: 'Poppins_600SemiBold' } }}>
+            <Stack.Screen name="listing/[id]" options={{ headerShown: false }} />
+          </Stack>
           <PortalHost />
         </ToastProvider>
       </ThemeProvider>

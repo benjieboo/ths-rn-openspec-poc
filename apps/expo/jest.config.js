@@ -1,7 +1,7 @@
 // Component and page tests run as iOS. Web behaviour (keyboard, layout, real browser) is covered by
 // Playwright in e2e/, since React Native Testing Library targets native trees, not the DOM.
 const transformIgnorePatterns = [
-  '/node_modules/(?!(.pnpm|react-native|@react-native|@react-native-community|expo|@expo|@expo-google-fonts|react-navigation|@react-navigation|nativewind|react-native-css-interop|@rn-primitives|lucide-react-native|@tanstack|zod))',
+  '/node_modules/(?!(.pnpm|react-native|@react-native|@react-native-community|expo|@expo|@expo-google-fonts|react-navigation|@react-navigation|standard-navigation|nativewind|react-native-css-interop|@rn-primitives|lucide-react-native|@tanstack|zod))',
   '/node_modules/react-native-reanimated/plugin/',
 ];
 
@@ -20,5 +20,7 @@ module.exports = {
   globalTeardown: '<rootDir>/test/global-teardown.js',
   ...shared,
   preset: 'jest-expo/ios',
+  // Page tests make real HTTP calls to the mock API.
+  testTimeout: 20000,
   testPathIgnorePatterns: ['/node_modules/', '<rootDir>/e2e/'],
 };
