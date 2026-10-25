@@ -8,10 +8,13 @@ export * from './components/button';
 export * from './components/card';
 export * from './components/dialog';
 export * from './components/icon';
+export * from './components/label';
 export * from './components/separator';
+export * from './components/radio-group';
 export * from './components/skeleton';
 export * from './components/tabs';
 export * from './components/text';
+export * from './components/textarea';
 
 // THS composites
 export * from './composites/action-list-row';
@@ -24,11 +27,13 @@ export * from './composites/owner-card';
 export * from './composites/person-avatar';
 export * from './composites/pet-card';
 export * from './composites/photo-gallery';
+export * from './composites/photo-viewer';
 export * from './composites/read-more';
 export * from './composites/review-card';
 export * from './composites/section';
 export * from './composites/status-banner';
 export * from './composites/sticky-apply-bar';
+export * from './composites/toast';
 
 // Hooks and helpers
 export * from './hooks/use-breakpoint';

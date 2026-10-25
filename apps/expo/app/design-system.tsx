@@ -26,6 +26,9 @@ import {
   PersonAvatar,
   PetCard,
   PhotoGallery,
+  PhotoViewer,
+  RadioGroup,
+  RadioGroupItem,
   ReadMore,
   ReviewCard,
   Section,
@@ -34,12 +37,14 @@ import {
   StatusBanner,
   StickyApplyBar,
   Text,
+  Textarea,
   useBreakpoint,
+  useToast,
 } from '@ths/ui';
 import { Stack } from 'expo-router';
 import { FlagIcon, HeartIcon, Share2Icon, WifiIcon, WindIcon } from 'lucide-react-native';
 import * as React from 'react';
-import { ScrollView, View } from 'react-native';
+import { Modal, ScrollView, View } from 'react-native';
 
 // Showcase for the design-system spec's "Visual parity across platforms" requirement.
 // Sample data is fictional and lives here only; journeys get data from the mock API.
@@ -94,6 +99,9 @@ export default function DesignSystemScreen() {
   const [favourite, setFavourite] = React.useState(false);
   const [lastPress, setLastPress] = React.useState<string>('—');
   const selected = DATES.find((d) => d.id === selectedDate);
+  const [reason, setReason] = React.useState<string | undefined>();
+  const [viewerIndex, setViewerIndex] = React.useState<number | null>(null);
+  const toast = useToast();
 
   return (
     <View className="flex-1 bg-background">
@@ -219,7 +227,28 @@ export default function DesignSystemScreen() {
 
           <Section title="Photo gallery">
             <Text variant="muted">Follows the breakpoint. Resize the browser across 1024px to switch.</Text>
-            <PhotoGallery photos={PHOTOS} onPhotoPress={(i) => setLastPress(`Photo ${i + 1}`)} className="rounded-lg" />
+            <PhotoGallery photos={PHOTOS} onPhotoPress={setViewerIndex} className="rounded-lg" />
+            <Text variant="caption">Pressing a photo opens the PhotoViewer at that photo.</Text>
+          </Section>
+
+          <Section title="Forms and feedback">
+            <RadioGroup value={reason} onValueChange={setReason} aria-label="Report reason">
+              {['Inaccurate information', 'Possible scam', 'Other'].map((label, i, all) => (
+                <RadioGroupItem key={label} value={label} label={label} index={i} total={all.length} />
+              ))}
+            </RadioGroup>
+            <Textarea label="Details (optional)" placeholder="Tell us a bit more" hint="Up to 2,000 characters" />
+            <View className="flex-row flex-wrap gap-3">
+              <Button variant="outline" onPress={() => toast.show('Link copied')}>
+                <Text>Default toast</Text>
+              </Button>
+              <Button variant="outline" onPress={() => toast.show('Application sent', { tone: 'success' })}>
+                <Text>Success toast</Text>
+              </Button>
+              <Button variant="outline" onPress={() => toast.show("We couldn't update your favourites. Please try again.", { tone: 'error' })}>
+                <Text>Error toast</Text>
+              </Button>
+            </View>
           </Section>
 
           <View className="gap-8 lg:flex-row">
@@ -348,6 +377,12 @@ export default function DesignSystemScreen() {
           </View>
         </View>
       </ScrollView>
+
+      <Modal visible={viewerIndex !== null} animationType="fade" onRequestClose={() => setViewerIndex(null)}>
+        {viewerIndex !== null && (
+          <PhotoViewer photos={PHOTOS} initialIndex={viewerIndex} onClose={() => setViewerIndex(null)} />
+        )}
+      </Modal>
 
       {!isDesktop && (
         <StickyApplyBar

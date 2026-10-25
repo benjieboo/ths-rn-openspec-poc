@@ -37,7 +37,7 @@ type StatusBannerProps = VariantProps<typeof bannerVariants> & {
 function StatusBanner({ tone = 'info', title, children, className }: StatusBannerProps) {
   const t = TONE[tone ?? 'info'];
   return (
-    <View role="status" aria-live="polite" accessibilityLiveRegion="polite" className={cn(bannerVariants({ tone }), className)}>
+    <View accessible role="status" aria-live="polite" accessibilityLiveRegion="polite" className={cn(bannerVariants({ tone }), className)}>
       <Icon as={t.icon} className={cn('mt-0.5', t.iconClass)} />
       <View className="flex-1 gap-0.5">
         {title ? <Text className={cn('font-semibold', t.textClass)}>{title}</Text> : null}

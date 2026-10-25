@@ -15,7 +15,7 @@ type ApiContextValue = {
 
 const ApiContext = React.createContext<ApiContextValue | null>(null);
 
-function makeQueryClient() {
+export function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
       queries: {
@@ -32,11 +32,22 @@ type ApiProviderProps = {
   initialScenario?: ScenarioSelection;
   /** Called when the scenario changes, e.g. to mirror it into the web URL. */
   onScenarioChange?: (scenario: ScenarioSelection) => void;
+  /** Override fetch (tests). */
+  fetch?: typeof fetch;
+  /** Provide a QueryClient (tests use a fresh one per render). */
+  queryClient?: QueryClient;
   children: React.ReactNode;
 };
 
-export function ApiProvider({ baseUrl, initialScenario = DEFAULT_SCENARIO, onScenarioChange, children }: ApiProviderProps) {
-  const [queryClient] = React.useState(makeQueryClient);
+export function ApiProvider({
+  baseUrl,
+  initialScenario = DEFAULT_SCENARIO,
+  onScenarioChange,
+  fetch: fetchImpl,
+  queryClient: providedClient,
+  children,
+}: ApiProviderProps) {
+  const [queryClient] = React.useState(() => providedClient ?? makeQueryClient());
   const [scenario, setScenarioState] = React.useState(initialScenario);
 
   const setScenario = React.useCallback(
@@ -49,13 +60,13 @@ export function ApiProvider({ baseUrl, initialScenario = DEFAULT_SCENARIO, onSce
 
   const value = React.useMemo<ApiContextValue>(
     () => ({
-      client: createApiClient({ baseUrl, scenario }),
+      client: createApiClient({ baseUrl, scenario, fetch: fetchImpl }),
       baseUrl,
       scenario,
       scenarioKey: formatScenarios(scenario),
       setScenario,
     }),
-    [baseUrl, scenario, setScenario]
+    [baseUrl, scenario, setScenario, fetchImpl]
   );
 
   return (

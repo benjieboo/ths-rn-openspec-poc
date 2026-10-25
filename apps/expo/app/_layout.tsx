@@ -3,7 +3,7 @@ import '@/global.css';
 import { PortalHost } from '@rn-primitives/portal';
 import { ApiProvider } from '@ths/api-contract/react';
 import { NAV_THEME } from '@ths/tokens';
-import { useDesignSystemFonts } from '@ths/ui';
+import { ToastProvider, useDesignSystemFonts } from '@ths/ui';
 import { Stack } from 'expo-router';
 import { ThemeProvider } from 'expo-router/react-navigation';
 import * as SplashScreen from 'expo-splash-screen';
@@ -32,9 +32,11 @@ export default function RootLayout() {
   return (
     <ApiProvider baseUrl={resolveApiBaseUrl()} initialScenario={initialScenario()} onScenarioChange={mirrorScenarioToUrl}>
       <ThemeProvider value={NAV_THEME}>
-        <StatusBar style="dark" />
-        <Stack screenOptions={{ headerTitleStyle: { fontFamily: 'Poppins_600SemiBold' } }} />
-        <PortalHost />
+        <ToastProvider>
+          <StatusBar style="dark" />
+          <Stack screenOptions={{ headerTitleStyle: { fontFamily: 'Poppins_600SemiBold' } }} />
+          <PortalHost />
+        </ToastProvider>
       </ThemeProvider>
     </ApiProvider>
   );

@@ -2,16 +2,16 @@
 
 ## 1. Design system additions (before any screen work)
 
-- [ ] 1.1 Add RadioGroup, Textarea and Label via the Reusables CLI into `packages/ui`, themed to THS. Verify: showcase renders them; tests for "Radio group semantics" and "Labelled text area"
-- [ ] 1.2 Toast provider and `useToast()` with default, success and error tones, auto-dismiss after about 4 s, newest replaces oldest, offset above sticky bars. Verify: tests for "Confirmation" and "Several messages"; showcase buttons trigger each tone on iOS and web
-- [ ] 1.3 PhotoViewer: opens at an index, swipe, arrow buttons, "n / N", close button, web arrow keys and Escape. Verify: tests for "Open at a photo" and "Keyboard on web"
-- [ ] 1.4 Export the new components and update the showcase route. Verify: `pnpm typecheck`
+- [x] 1.1 Add RadioGroup, Textarea and Label via the Reusables CLI into `packages/ui`, themed to THS. Verify: showcase renders them; tests for "Radio group semantics" and "Labelled text area"
+- [x] 1.2 Toast provider and `useToast()` with default, success and error tones, auto-dismiss after about 4 s, newest replaces oldest, offset above sticky bars. Verify: tests for "Confirmation" and "Several messages"; showcase buttons trigger each tone on iOS and web
+- [x] 1.3 PhotoViewer: opens at an index, swipe, arrow buttons, "n / N", close button, web arrow keys and Escape. Verify: Jest test for "Open at a photo"; Playwright test for "Keyboard on web" (real browser)
+- [x] 1.4 Export the new components and update the showcase route. Verify: `pnpm typecheck`
 
 ## 2. Test tooling
 
-- [ ] 2.1 Jest (`jest-expo`) and React Native Testing Library in `apps/expo`, with NativeWind and Reanimated test setup. Verify: a smoke test renders the home route
-- [ ] 2.2 Test helper that renders a route inside `ApiProvider` backed by the in-process mock API, taking a scenario. Verify: a test reads `/me` as `full-sitter`
-- [ ] 2.3 Playwright on web with two viewport projects (390 and 1280 px). Verify: `pnpm --filter @ths/expo e2e` opens `/listing/2001`
+- [x] 2.1 Jest (`jest-expo`) and React Native Testing Library in `apps/expo`, with NativeWind and Reanimated test setup. Verify: a smoke test renders the home route
+- [x] 2.2 Test helper that renders a route inside `ApiProvider` backed by the in-process mock API, taking a scenario. Verify: a test reads `/me` as `full-sitter`
+- [x] 2.3 Playwright on web with two viewport projects (390 and 1280 px). Verify: `pnpm --filter @ths/expo e2e` runs the design-system keyboard test at both widths
 
 ## 3. View model
 
