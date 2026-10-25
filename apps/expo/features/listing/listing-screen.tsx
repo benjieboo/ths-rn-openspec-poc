@@ -1,5 +1,5 @@
 import { useBreakpoint } from '@ths/ui';
-import Head from 'expo-router/head';
+import { WebHead } from './web-head';
 
 import { copy } from './copy';
 import { DesktopListing } from './desktop-listing';
@@ -27,10 +27,10 @@ export function ListingScreen({ listingId }: { listingId: string }) {
   const data = listing.data;
   return (
     <>
-      <Head>
+      <WebHead>
         <title>{copy.pageTitle(data.title, data.location.city)}</title>
         <meta name="description" content={data.introduction} />
-      </Head>
+      </WebHead>
       {isDesktop ? <DesktopListing page={page} listing={data} /> : <MobileListing page={page} listing={data} />}
     </>
   );

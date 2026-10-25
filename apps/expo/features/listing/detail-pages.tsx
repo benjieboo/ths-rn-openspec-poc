@@ -2,7 +2,7 @@ import type { Listing } from '@ths/api-contract';
 import { useAssignments, useListing, usePets, useResponsibilities, useReviews, useSitEssentials, useAmenities } from '@ths/api-contract/react';
 import { PetCard, PhotoViewer, Section, Skeleton, Text, useBreakpoint } from '@ths/ui';
 import { Stack, useRouter } from 'expo-router';
-import Head from 'expo-router/head';
+import { WebHead } from './web-head';
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
 
@@ -43,9 +43,9 @@ function DetailLayout({
     <View className="flex-1 bg-background">
       <Stack.Screen options={{ title: resolvedTitle, headerBackTitle: copy.back }} />
       {listing.data && (
-        <Head>
+        <WebHead>
           <title>{copy.detailPageTitle(resolvedTitle, listing.data.title)}</title>
-        </Head>
+        </WebHead>
       )}
       <ScrollView contentContainerClassName="pb-16">
         <View className="w-full max-w-2xl gap-6 self-center px-4 py-6">
@@ -191,9 +191,9 @@ export function GalleryPage({ listingId, initialIndex }: { listingId: string; in
   if (!listing.data) return <View className="flex-1 bg-brand-surface" />;
   return (
     <>
-      <Head>
+      <WebHead>
         <title>{copy.detailPageTitle(copy.sections.photos, listing.data.title)}</title>
-      </Head>
+      </WebHead>
       <PhotoViewer
         photos={listing.data.photos.map((p) => ({ id: p.id, url: p.url, alt: p.alt ?? undefined }))}
         initialIndex={initialIndex}

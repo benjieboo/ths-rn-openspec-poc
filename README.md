@@ -22,10 +22,11 @@ packages/mock-api/       Hono server + seed.json + scenarios (port 4010)
 ```bash
 pnpm install
 pnpm dev                      # mock API on :4010 + Expo on :8090
-pnpm test                     # contract + mock API tests
+pnpm test                     # contract, mock API and app tests (Jest starts its own mock API on :4099)
+pnpm --filter @ths/expo e2e   # Playwright at 390 and 1280 px (needs `pnpm dev` running)
 ```
 
-- Web: http://localhost:8090 (design system showcase: http://localhost:8090/design-system)
+- Web: http://localhost:8090 · listing: http://localhost:8090/listing/2001 · design system: /design-system
 - iOS: `pnpm --filter @ths/expo exec expo run:ios --port 8090` (dev client; SDK 56)
 
 Port 8090 is used so this doesn't collide with the main THS app's Metro on 8081.
@@ -42,6 +43,12 @@ Every request can pick a viewer and data edge cases, via the `x-scenario` header
 In the app: **Home → Scenarios** sets it for all requests; **Home → API check** shows every endpoint's result.
 On web, the scenario is mirrored in the URL, e.g. `/dev/api?scenario=full-sitter,no-reviews`.
 `curl -X POST localhost:4010/__reset` clears favourites and applications. Contract: [openspec/specs/mock-api/spec.md](openspec/specs/mock-api/spec.md).
+
+## Where things live
+
+- `apps/expo/app/listing/[id]/…`: thin route files (one per page, native and web)
+- `apps/expo/features/listing/`: composition only: view model (`logic.ts`, `use-listing-page.ts`), copy, sections, layouts
+- Tests are named after spec scenarios: `apps/expo/test/__tests__/listing.test.tsx`, `features/listing/logic.test.ts`, `e2e/`
 
 ## Adding design system components
 
@@ -67,6 +74,6 @@ CLI: `npx openspec list`, `npx openspec validate --strict`.
 - [x] 0. Scaffold: monorepo, Expo Router, NativeWind, Reusables, OpenSpec, hello route on iOS + web
 - [x] 1. Design system themed as THS + Listing composites + DS spec (`/design-system` showcase)
 - [x] 2. Mock API + contract (scenarios, `/dev/scenarios`, `/dev/api`)
-- [ ] 3. Listing spec (review gate)
-- [ ] 4. Generate the Listing from the spec
+- [x] 3. Listing spec (review gate)
+- [x] 4. Generate the Listing from the spec (screenshots in [docs/screenshots](docs/screenshots))
 - [ ] 5. Prove the loop with a spec-only change

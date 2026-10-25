@@ -46,20 +46,20 @@
 - [x] 7.1 Primary call to action per viewer, membership prompt, upgrade note, own-listing note. Verify: tests for "Anonymous viewer", "Partial member", "Own listing", "Everything under review, full sitter"
 - [x] 7.2 Apply flow: choose dates, message, confirm, success toast, applied state, 409 handling. Verify: tests for "No dates selected", "Successful application", "Dates became unavailable"
 - [x] 7.3 Favourite with optimistic update, error toast, anonymous prompt. Verify: tests for "Save", "Save fails" (`favourite-error`), "Anonymous heart"
-- [ ] 7.4 Share and refer a friend (native share sheet, Web Share, copy-link fallback with toast). Verify: Jest test for "Native share" (Share mocked); Playwright test for "Web without a share sheet"
+- [x] 7.4 Share and refer a friend (native share sheet, Web Share, copy-link fallback with toast). Verify: Jest test for "Native share" (Share mocked); Playwright test for "Web without a share sheet"
 - [x] 7.5 Report listing dialog with reasons, optional details, disabled until chosen, confirmation toast. Verify: tests for "Send a report" and "Reason required"
 
 ## 8. States and metadata
 
 - [x] 8.1 Loading skeleton per presentation and no layout shift. Verify: tests for "First load"; manual check with `loading-slow`
 - [x] 8.2 Full-page error with retry, section-level errors, not-found page. Verify: tests for "Listing fails", "One section fails", "Unknown listing"
-- [ ] 8.3 Web title and meta description per route. Verify: Playwright test for "Browser tab" (Head is web-only)
+- [x] 8.3 Web title and meta description per route. Verify: Playwright test for "Browser tab" (Head is web-only)
 
 ## 9. Cross-platform verification
 
-- [ ] 9.1 Playwright smoke at 390 and 1280 px for `anonymous` and `full-sitter`: page renders, call to action label correct, apply flow succeeds for full sitter. Verify: e2e passes
-- [ ] 9.2 Screenshots of iOS, mobile web and desktop web for `anonymous` and `full-sitter`, saved to `docs/screenshots/`. Verify: files present and visually reviewed
-- [ ] 9.3 Confirm no `.web.tsx` / `.native.tsx` files outside `packages/ui`. Verify: `find` returns nothing
+- [x] 9.1 Playwright smoke at 390 and 1280 px for `anonymous` and `full-sitter`: page renders, call to action label correct, apply flow succeeds for full sitter. Verify: e2e passes
+- [x] 9.2 Screenshots of iOS, mobile web and desktop web for `anonymous` and `full-sitter`, saved to `docs/screenshots/`. Verify: files present and visually reviewed
+- [x] 9.3 Confirm no `.web.tsx` / `.native.tsx` files outside `packages/ui`. Verify: `find` returns nothing
 
 ## Workflow follow-up
 

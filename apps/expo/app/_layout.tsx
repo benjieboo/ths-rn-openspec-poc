@@ -35,7 +35,7 @@ export default function RootLayout() {
         <ToastProvider>
           <StatusBar style="dark" />
           <Stack screenOptions={{ headerTitleStyle: { fontFamily: 'Poppins_600SemiBold' } }}>
-            <Stack.Screen name="listing/[id]" options={{ headerShown: false }} />
+            <Stack.Screen name="listing/[id]" options={{ headerShown: false, title: 'Listing' }} />
           </Stack>
           <PortalHost />
         </ToastProvider>
