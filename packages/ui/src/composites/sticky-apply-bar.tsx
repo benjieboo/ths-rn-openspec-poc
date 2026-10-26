@@ -7,8 +7,8 @@ import { cn } from '../lib/utils';
 type StickyApplyBarProps = {
   /** Left side, e.g. the selected dates. */
   summary?: React.ReactNode;
-  /** Right side, the call to action. */
-  action: React.ReactNode;
+  /** Right side, the call to action. Leave it out and the summary takes the full width. */
+  action?: React.ReactNode;
   className?: string;
 };
 

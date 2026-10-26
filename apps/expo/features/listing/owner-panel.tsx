@@ -1,5 +1,5 @@
 import type { Listing } from '@ths/api-contract';
-import { Button, OwnerCard, Skeleton, StatusBanner, Text } from '@ths/ui';
+import { Button, OwnerCard, Skeleton, StatusBanner, Text, useToast } from '@ths/ui';
 import { View } from 'react-native';
 
 import type { ListingActions } from './actions';
@@ -14,6 +14,26 @@ export function CtaButton({ page, actions, className }: { page: ListingPage; act
   return (
     <Button onPress={actions.onCta} disabled={cta.disabled} className={className} testID="primary-cta">
       <Text>{cta.label}</Text>
+    </Button>
+  );
+}
+
+/** Secondary action when there are no open dates. Not saved yet, so it lasts for this visit. */
+export function NotifyButton({ page }: { page: ListingPage }) {
+  const toast = useToast();
+  if (page.cta.kind !== 'none' || page.cta.reason !== 'no-dates') return null;
+  const requested = page.notifyRequested;
+  return (
+    <Button
+      variant="outline"
+      size="sm"
+      disabled={requested}
+      testID="notify-me"
+      onPress={() => {
+        page.requestNotify();
+        toast.show(copy.notify.confirmed, { tone: 'success' });
+      }}>
+      <Text>{requested ? copy.notify.requested : copy.notify.action}</Text>
     </Button>
   );
 }
@@ -45,10 +65,15 @@ export function OwnerPanel({
       roleLabel={copy.petParent}
       verified={listing.owner.verified}
       variant={variant}>
-      <DateChips assignments={page.assignments.data} selectedId={page.selectedId} onSelect={page.selectAssignment} />
+      <DateChips query={page.assignments} selectedId={page.selectedId} onSelect={page.selectAssignment} />
       <View className="gap-3">
         <CtaNotes page={page} />
-        {withCta && <CtaButton page={page} actions={actions} />}
+        {withCta && (
+          <>
+            <CtaButton page={page} actions={actions} />
+            <NotifyButton page={page} />
+          </>
+        )}
       </View>
     </OwnerCard>
   );

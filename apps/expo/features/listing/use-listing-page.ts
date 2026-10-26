@@ -41,19 +41,29 @@ export function useListingPage(listingId: string) {
     setSelectedId(id);
   }, []);
 
+  // "Notify me" isn't saved yet: it lasts for this visit, like the date selection.
+  const [notifyRequested, setNotifyRequested] = React.useState(false);
+  const requestNotify = React.useCallback(() => setNotifyRequested(true), []);
+
   const appliedIds = React.useMemo(
     () => (me.data?.applications ?? []).filter((app) => app.listingId === listingId).map((app) => app.assignmentId),
     [me.data, listingId]
   );
 
-  const cta = callToAction({ role, assignments: assignmentList, selectedId, appliedIds });
+  const cta = callToAction({
+    role,
+    assignments: assignments.data,
+    // A failed refetch keeps showing the dates we already have.
+    datesFailed: assignments.isError && !assignments.data,
+    selectedId,
+    appliedIds,
+  });
   const visible = visibleSections({
     role,
     petCount: listing.data?.animals.reduce((n, x) => n + x.count, 0) ?? 0,
     amenityCount: listing.data?.amenityCount ?? 0,
     reviewCount: listing.data?.reviewCount ?? 0,
     assignments: assignmentList,
-    assignmentsLoaded: assignments.isSuccess,
   });
 
   return {
@@ -71,6 +81,8 @@ export function useListingPage(listingId: string) {
     visible,
     selectedId,
     selectAssignment,
+    notifyRequested,
+    requestNotify,
     selectedAssignment: assignmentList.find((x) => x.id === selectedId),
     appliedIds,
   };

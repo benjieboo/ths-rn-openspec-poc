@@ -2,6 +2,7 @@ import type { Listing } from '@ths/api-contract';
 import { colors } from '@ths/tokens';
 import {
   ActionListRow,
+  Button,
   formatDateRange,
   IconButton,
   PhotoGallery,
@@ -28,7 +29,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useListingActions } from './actions';
 import { copy } from './copy';
-import { CtaButton, OwnerPanel } from './owner-panel';
+import { CtaButton, NotifyButton, OwnerPanel } from './owner-panel';
 import { SectionState } from './section-state';
 import { IntroductionSection, LocationContent, PetsRow, ReferBlock, ReviewingBanner, TitleBlock } from './sections';
 import type { ListingPage } from './use-listing-page';
@@ -59,7 +60,8 @@ export function MobileListing({ page, listing }: { page: ListingPage; listing: L
   }, [insets.top, scrollRef]);
 
   const actions = useListingActions(page, { revealDates });
-  const showBar = page.cta.kind !== 'none';  // includes 'loading', so the bar doesn't pop in
+  // Only the pet parent goes without the bar; while loading it shows a skeleton so it doesn't pop in.
+  const showBar = !(page.cta.kind === 'none' && page.cta.reason === 'owner');
   useToastBottomOffset(showBar ? STICKY_BAR_HEIGHT : 0);
 
   // The header turns solid and shows the title once the photos have scrolled away.
@@ -206,7 +208,15 @@ export function MobileListing({ page, listing }: { page: ListingPage; listing: L
       {showBar && (
         <StickyApplyBar
           summary={
-            next ? (
+            page.cta.kind === 'none' && page.cta.reason === 'dates-error' ? (
+              <Text variant="muted" testID="apply-bar-dates">
+                {copy.sectionError(copy.datesWhat)}
+              </Text>
+            ) : page.cta.kind === 'none' ? (
+              <Text variant="caption" testID="apply-bar-dates">
+                {copy.noDates}
+              </Text>
+            ) : next ? (
               <View>
                 <Text variant="caption">{copy.sections.sitterNeeded}</Text>
                 <Text className="font-semibold" testID="apply-bar-dates">
@@ -215,7 +225,17 @@ export function MobileListing({ page, listing }: { page: ListingPage; listing: L
               </View>
             ) : null
           }
-          action={<CtaButton page={page} actions={actions} />}
+          action={
+            page.cta.kind === 'none' && page.cta.reason === 'dates-error' ? (
+              <Button variant="outline" onPress={() => page.assignments.refetch()}>
+                <Text>{copy.listingError.retry}</Text>
+              </Button>
+            ) : page.cta.kind === 'none' ? (
+              <NotifyButton page={page} />
+            ) : (
+              <CtaButton page={page} actions={actions} />
+            )
+          }
         />
       )}
 

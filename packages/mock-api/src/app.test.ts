@@ -207,6 +207,22 @@ describe('Scenario selection', () => {
     expect(body.items.every((a: { isReviewing: boolean }) => a.isReviewing)).toBe(true);
   });
 
+  it('no-open-dates empties the dates and keeps the policies', async () => {
+    const [plain, dates, essentials] = await Promise.all([
+      json('/listings/2001/sit-essentials'),
+      json('/listings/2001/assignments', { scenario: 'no-open-dates' }),
+      json('/listings/2001/sit-essentials', { scenario: 'no-open-dates' }),
+    ]);
+    expect(dates.body.items).toEqual([]);
+    expect(essentials.body).toEqual({ ...plain.body, dates: [] });
+  });
+
+  it('no-open-dates wins over all-assignments-reviewing in either order', async () => {
+    for (const scenario of ['no-open-dates,all-assignments-reviewing', 'all-assignments-reviewing,no-open-dates']) {
+      expect((await json('/listings/2001/assignments', { scenario })).body.items).toEqual([]);
+    }
+  });
+
   it('no-amenities and no-pets empty the resources and counts agree', async () => {
     const scenario = 'no-amenities,no-pets';
     const [listing, amenities, pets, resp] = await Promise.all([

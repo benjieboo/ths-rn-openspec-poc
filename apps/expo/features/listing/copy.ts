@@ -46,6 +46,12 @@ export const copy = {
   mapNote: 'Approximate location. The exact address is shared once a sit is confirmed.',
   mapLabel: (place: string) => `Approximate location: ${place}`,
   noDates: 'No dates available right now',
+  datesWhat: 'the dates',
+  notify: {
+    action: 'Notify me',
+    requested: "You'll be notified",
+    confirmed: "We'll let you know when dates open",
+  },
 
   cta: {
     join: 'Join now to apply',

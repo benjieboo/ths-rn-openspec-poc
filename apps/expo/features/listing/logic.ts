@@ -23,22 +23,26 @@ export function defaultSelection(assignments: Assignment[]) {
 }
 
 export type CallToAction =
-  | { kind: 'none'; reason: 'owner' | 'no-dates' }
+  | { kind: 'none'; reason: 'owner' | 'no-dates' | 'dates-error' }
   | { kind: 'loading' }
   | { kind: 'join' | 'upgrade' | 'apply' | 'choose-dates'; label: string; disabled: false }
   | { kind: 'applied' | 'paused'; label: string; disabled: true };
 
 type CtaInput = {
   role: ViewerRole;
-  assignments: Assignment[];
+  /** `undefined` until dates have loaded, so loading or failed dates never read as "no dates". */
+  assignments: Assignment[] | undefined;
+  datesFailed?: boolean;
   selectedId?: string;
   /** Assignment ids this viewer has applied to on this listing. */
   appliedIds: string[];
 };
 
-export function callToAction({ role, assignments, selectedId, appliedIds }: CtaInput): CallToAction {
+export function callToAction({ role, assignments, datesFailed, selectedId, appliedIds }: CtaInput): CallToAction {
   if (role === 'unknown') return { kind: 'loading' };
   if (role === 'owner') return { kind: 'none', reason: 'owner' };
+  if (datesFailed) return { kind: 'none', reason: 'dates-error' };
+  if (!assignments) return { kind: 'loading' };
   if (assignments.length === 0) return { kind: 'none', reason: 'no-dates' };
   if (role === 'anonymous') return { kind: 'join', label: copy.cta.join, disabled: false };
   if (role === 'partial') return { kind: 'upgrade', label: copy.cta.upgrade, disabled: false };
@@ -56,11 +60,9 @@ type VisibilityInput = {
   amenityCount: number;
   reviewCount: number;
   assignments: Assignment[];
-  /** Until dates load, keep their section (showing its skeleton) so the page doesn't shift. */
-  assignmentsLoaded?: boolean;
 };
 
-export function visibleSections({ role, petCount, amenityCount, reviewCount, assignments, assignmentsLoaded = true }: VisibilityInput) {
+export function visibleSections({ role, petCount, amenityCount, reviewCount, assignments }: VisibilityInput) {
   const isOwner = role === 'owner';
   const known = role !== 'unknown';
   return {
@@ -68,7 +70,8 @@ export function visibleSections({ role, petCount, amenityCount, reviewCount, ass
     pets: petCount > 0,
     amenities: amenityCount > 0,
     reviews: reviewCount > 0,
-    sitEssentials: !assignmentsLoaded || assignments.length > 0,
+    // Guest and sitter pets policy apply with or without open dates.
+    sitEssentials: true,
     favourite: known && !isOwner,
     refer: known && !isOwner,
     report: known && !isOwner,

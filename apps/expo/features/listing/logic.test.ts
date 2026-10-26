@@ -36,7 +36,13 @@ describe('Primary call to action by viewer', () => {
     ['Partial member', { role: 'partial', assignments: two }, { kind: 'upgrade', label: copy.cta.upgrade }],
     ['Own listing', { role: 'owner', assignments: two }, { kind: 'none', reason: 'owner' }],
     ['Everything under review, full sitter', { role: 'full', assignments: [a('x', true), a('y', true)] }, { kind: 'paused', label: copy.cta.paused, disabled: true }],
-    ['No open dates', { role: 'full', assignments: [] }, { kind: 'none', reason: 'no-dates' }],
+    ['Anonymous viewer, no dates', { role: 'anonymous', assignments: [] }, { kind: 'none', reason: 'no-dates' }],
+    ['Partial member, no dates', { role: 'partial', assignments: [] }, { kind: 'none', reason: 'no-dates' }],
+    ['Full sitter, no dates', { role: 'full', assignments: [] }, { kind: 'none', reason: 'no-dates' }],
+    ['Pet parent, no dates', { role: 'owner', assignments: [] }, { kind: 'none', reason: 'owner' }],
+    ['Dates still loading', { role: 'anonymous', assignments: undefined }, { kind: 'loading' }],
+    ['Dates fail to load', { role: 'full', assignments: undefined, datesFailed: true }, { kind: 'none', reason: 'dates-error' }],
+    ['Dates fail to load, own listing', { role: 'owner', assignments: undefined, datesFailed: true }, { kind: 'none', reason: 'owner' }],
     ['No dates selected', { role: 'full', assignments: two }, { kind: 'choose-dates', label: copy.cta.apply }],
     ['dates selected', { role: 'full', assignments: two, selectedId: 'y' }, { kind: 'apply', label: copy.cta.apply }],
     ['Successful application (applied)', { role: 'full', assignments: two, selectedId: 'y', appliedIds: ['y'] }, { kind: 'applied', label: copy.cta.applied, disabled: true }],
@@ -58,8 +64,8 @@ describe('Section visibility', () => {
   it('No reviews', () => expect(visibleSections({ ...base, reviewCount: 0 }).reviews).toBe(false));
   it('All dates under review', () => expect(visibleSections({ ...base, assignments: [a('x', true)] }).reviewingBanner).toBe(true));
   it('Some dates open', () => expect(visibleSections(base).reviewingBanner).toBe(false));
-  it('sit essentials keep their place while dates load', () =>
-    expect(visibleSections({ ...base, assignments: [], assignmentsLoaded: false }).sitEssentials).toBe(true));
+  it('Sit essentials: No open dates', () => expect(visibleSections({ ...base, assignments: [] }).sitEssentials).toBe(true));
+  it('No banner (no open dates)', () => expect(visibleSections({ ...base, assignments: [] }).reviewingBanner).toBe(false));
   it('Own listing hides favourite, refer, report', () =>
     expect(visibleSections({ ...base, role: 'owner' })).toMatchObject({ favourite: false, refer: false, report: false }));
 });

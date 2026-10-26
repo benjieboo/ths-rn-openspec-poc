@@ -13,8 +13,7 @@ import ResponsibilitiesRoute from '@/app/listing/[id]/responsibilities';
 import ReviewsRoute from '@/app/listing/[id]/reviews';
 import SitEssentialsRoute from '@/app/listing/[id]/sit-essentials';
 import { copy } from '@/features/listing/copy';
-import { DateChips } from '@/features/listing/sections';
-import { DESKTOP, PHONE, renderRoutes, renderWithProviders, resetMockApi, setWindowSize } from '../render';
+import { DESKTOP, PHONE, renderRoutes, resetMockApi, setWindowSize } from '../render';
 
 // One describe per requirement in openspec/changes/add-listing-view/specs/listing-view/spec.md;
 // test names are the spec's scenario names. Data comes from the real mock API.
@@ -38,8 +37,12 @@ const open = (url: string, opts?: Opts) => renderRoutes(ROUTES, url, opts);
 const openListing = async (opts?: Opts, id = '2001') => {
   const r = open(`/listing/${id}`, opts);
   await screen.findByTestId('listing-title');
-  // Wait until the viewer is known: the CTA (or the owner's note) replaces its skeleton.
-  await waitFor(() => expect(screen.queryByTestId('primary-cta') ?? screen.queryByText(copy.ownListingNote)).toBeTruthy());
+  // Wait until the viewer and dates are known: the CTA, the owner's note or the no-dates copy replaces its skeleton.
+  await waitFor(() =>
+    expect(
+      screen.queryByTestId('primary-cta') ?? screen.queryByText(copy.ownListingNote) ?? screen.queryAllByText(copy.noDates)[0]
+    ).toBeTruthy()
+  );
   return r;
 };
 
@@ -57,6 +60,13 @@ const failing =
     }
     return real(input, init);
   };
+
+/** Wraps fetch so matching requests never answer, to hold a section in its loading state. */
+const hanging =
+  (match: (url: string) => boolean) =>
+  (real: typeof fetch): typeof fetch =>
+  (input, init) =>
+    match(String(input)) ? new Promise<Response>(() => {}) : real(input, init);
 
 beforeEach(async () => {
   await resetMockApi();
@@ -115,6 +125,13 @@ describe('Mobile presentation', () => {
     await openListing();
     expect(screen.getByTestId('apply-bar-dates')).toHaveTextContent('20 – 27 Dec 26');
     expect(screen.getByTestId('primary-cta')).toHaveTextContent(copy.cta.join);
+  });
+
+  it('Apply bar with no open dates', async () => {
+    await openListing({ scenario: 'full-sitter,no-open-dates' });
+    expect(screen.getByTestId('apply-bar-dates')).toHaveTextContent(copy.noDates);
+    expect(screen.getByTestId('notify-me')).toHaveTextContent(copy.notify.action);
+    expect(screen.queryByTestId('primary-cta')).toBeNull();
   });
 });
 
@@ -272,6 +289,26 @@ describe('Sit essentials', () => {
     await openListing({ size: DESKTOP });
     expect(await screen.findByText('Guests allowed (must be approved in advance)')).toBeTruthy();
   });
+
+  describe('No open dates', () => {
+    it('desktop section', async () => {
+      await openListing({ size: DESKTOP, scenario: 'no-open-dates' });
+      expect(await screen.findByText('Guests allowed (must be approved in advance)')).toBeTruthy();
+      expect(screen.queryByText(copy.essentials.arrival)).toBeNull();
+    });
+
+    it('mobile row', async () => {
+      const r = await openListing({ scenario: 'no-open-dates' });
+      fireEvent.press(screen.getByRole('link', { name: copy.sections.sitEssentials }));
+      await waitFor(() => expect(r.getPathname()).toBe('/listing/2001/sit-essentials'));
+    });
+
+    it('detail page', async () => {
+      open('/listing/2001/sit-essentials', { scenario: 'no-open-dates' });
+      expect(await screen.findByText('Guests allowed (must be approved in advance)')).toBeTruthy();
+      expect(screen.queryByText(copy.essentials.arrival)).toBeNull();
+    });
+  });
 });
 
 describe('Sitter reviews', () => {
@@ -312,9 +349,81 @@ describe('Pet parent and dates', () => {
     expect(screen.getByTestId('apply-bar-dates')).toHaveTextContent('10 – 24 Feb 27');
   });
 
-  it('No open dates', () => {
-    renderWithProviders(<DateChips assignments={[]} onSelect={() => {}} />);
-    expect(screen.getByText(copy.noDates)).toBeTruthy();
+  it('No open dates', async () => {
+    await openListing({ size: DESKTOP, scenario: 'full-sitter,no-open-dates' });
+    expect(within(screen.getByTestId('date-chips')).getByText(copy.noDates)).toBeTruthy();
+    expect(screen.queryByTestId('primary-cta')).toBeNull();
+  });
+});
+
+// openspec/changes/handle-no-open-dates/specs/listing-view/spec.md
+describe('No open dates', () => {
+  it('Anonymous viewer, no dates', async () => {
+    await openListing({ scenario: 'no-open-dates' });
+    expect(screen.getAllByText(copy.noDates).length).toBeGreaterThan(0);
+    expect(screen.queryByText(copy.cta.join)).toBeNull();
+    expect(screen.getByTestId('notify-me')).toBeTruthy();
+    fireEvent.press(screen.getByRole('button', { name: copy.favourite.add }));
+    expect(await screen.findByText(copy.membershipPrompt.title)).toBeTruthy();
+  });
+
+  it('Partial member, no dates', async () => {
+    await openListing({ scenario: 'partial-member,no-open-dates' });
+    expect(screen.getAllByText(copy.noDates).length).toBeGreaterThan(0);
+    expect(screen.queryByText(copy.cta.upgrade)).toBeNull();
+    expect(screen.queryByText(copy.upgradeNote)).toBeNull();
+  });
+
+  it('Full sitter, no dates', async () => {
+    await openListing({ scenario: 'full-sitter,no-open-dates' });
+    expect(screen.queryByTestId('primary-cta')).toBeNull();
+    expect(await screen.findByRole('button', { name: copy.favourite.add })).toBeTruthy();
+    expect(screen.getByRole('button', { name: copy.share.label })).toBeTruthy();
+    expect(screen.getByRole('link', { name: copy.report.link })).toBeTruthy();
+  });
+
+  it('Pet parent, no dates', async () => {
+    await openListing({ scenario: 'own-listing,no-open-dates' });
+    expect(await screen.findByText(copy.ownListingNote)).toBeTruthy();
+    expect(screen.getAllByText(copy.noDates).length).toBeGreaterThan(0);
+    expect(screen.queryByTestId('primary-cta')).toBeNull();
+    expect(screen.queryByRole('button', { name: copy.favourite.add })).toBeNull();
+    expect(screen.queryByRole('link', { name: copy.report.link })).toBeNull();
+  });
+
+  it('No banner', async () => {
+    await openListing({ scenario: 'full-sitter,no-open-dates,all-assignments-reviewing' });
+    expect(screen.getAllByText(copy.noDates).length).toBeGreaterThan(0);
+    expect(screen.queryByText(copy.reviewing.body('Camille'))).toBeNull();
+  });
+
+  it('Dates still loading', async () => {
+    open('/listing/2001', { scenario: 'full-sitter', fetch: hanging((url) => url.includes('/assignments')) });
+    await screen.findByTestId('listing-title');
+    // The viewer is known once the heart appears.
+    await screen.findByRole('button', { name: copy.favourite.add });
+    expect(screen.queryByText(copy.noDates)).toBeNull();
+    expect(screen.queryByTestId('primary-cta')).toBeNull();
+  });
+
+  it('Dates fail to load', async () => {
+    let fail = true;
+    const flaky = (real: typeof fetch): typeof fetch => (input, init) =>
+      fail && String(input).includes('/assignments')
+        ? failing(() => true, 500, 'server_error')(real)(input, init)
+        : real(input, init);
+    open('/listing/2001', { scenario: 'full-sitter', fetch: flaky });
+    const errors = await screen.findAllByText(copy.sectionError(copy.datesWhat));
+    expect(errors).toHaveLength(2); // dates section and the apply bar
+    expect(screen.queryByText(copy.noDates)).toBeNull();
+    expect(screen.queryByTestId('primary-cta')).toBeNull();
+
+    fail = false;
+    // One "Try again" in the dates section, one in the apply bar, which renders last.
+    const retries = screen.getAllByText(copy.listingError.retry);
+    expect(retries).toHaveLength(2);
+    fireEvent.press(retries[1]!);
+    expect(await screen.findByTestId('primary-cta')).toHaveTextContent(copy.cta.apply);
   });
 });
 
@@ -453,3 +562,47 @@ describe('Detail pages', () => {
 });
 
 void within;
+
+describe('Notify me when dates open', () => {
+  it('Ask to be notified', async () => {
+    await openListing({ scenario: 'full-sitter,no-open-dates' });
+    fireEvent.press(screen.getByTestId('notify-me'));
+    expect(await screen.findByRole('status')).toHaveTextContent(copy.notify.confirmed);
+    expect(screen.getByTestId('notify-me')).toHaveTextContent(copy.notify.requested);
+    expect(screen.getByTestId('notify-me')).toBeDisabled();
+  });
+
+  it.each([
+    ['phone', PHONE],
+    ['desktop', DESKTOP],
+  ])('Notify me on every layout (%s)', async (_name, size) => {
+    await openListing({ size, scenario: 'partial-member,no-open-dates' });
+    expect(screen.getAllByTestId('notify-me')).toHaveLength(1);
+    expect(screen.getByTestId('notify-me')).toHaveTextContent(copy.notify.action);
+  });
+
+  it('Not for the pet parent', async () => {
+    await openListing({ scenario: 'own-listing,no-open-dates' });
+    expect(screen.queryByTestId('notify-me')).toBeNull();
+  });
+
+  it('Only with no open dates', async () => {
+    await openListing({ scenario: 'full-sitter' });
+    expect(screen.queryByTestId('notify-me')).toBeNull();
+  });
+
+  it('Only with no open dates (dates still loading)', async () => {
+    open('/listing/2001', { scenario: 'full-sitter', fetch: hanging((url) => url.includes('/assignments')) });
+    await screen.findByRole('button', { name: copy.favourite.add });
+    expect(screen.queryByTestId('notify-me')).toBeNull();
+  });
+
+  it('Not kept after reload', async () => {
+    const r = await openListing({ scenario: 'full-sitter,no-open-dates' });
+    fireEvent.press(screen.getByTestId('notify-me'));
+    expect(screen.getByTestId('notify-me')).toHaveTextContent(copy.notify.requested);
+    r.unmount();
+    await openListing({ scenario: 'full-sitter,no-open-dates' });
+    expect(screen.getByTestId('notify-me')).toHaveTextContent(copy.notify.action);
+  });
+});

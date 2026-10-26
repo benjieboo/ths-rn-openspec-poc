@@ -47,6 +47,7 @@ import {
   sitterPetsText,
   timeAloneText,
 } from './format';
+import { type QueryLike, SectionState } from './section-state';
 
 function Fact({ icon, children }: { icon: LucideIcon; children: React.ReactNode }) {
   return (
@@ -293,30 +294,33 @@ export function ReviewsList({
 }
 
 type DatesProps = {
-  assignments: Assignment[] | undefined;
+  query: QueryLike<Assignment[]>;
   selectedId?: string;
   onSelect: (id: string) => void;
 };
 
-export function DateChips({ assignments, selectedId, onSelect }: DatesProps) {
-  if (!assignments) return <Skeleton className="h-14 w-full rounded-md" />;
+export function DateChips({ query, selectedId, onSelect }: DatesProps) {
   return (
     <View className="gap-3" testID="date-chips">
       <Text variant="label">{copy.sections.sitterNeeded}</Text>
-      {assignments.length === 0 ? (
-        <Text variant="muted">{copy.noDates}</Text>
-      ) : (
-        assignments.map((a) => (
-          <DateRangeChip
-            key={a.id}
-            start={a.startDate}
-            end={a.endDate}
-            reviewing={a.isReviewing}
-            selected={selectedId === a.id}
-            onPress={() => onSelect(a.id)}
-          />
-        ))
-      )}
+      <SectionState query={query} what={copy.datesWhat} skeleton={<Skeleton className="h-14 w-full rounded-md" />}>
+        {(assignments) =>
+          assignments.length === 0 ? (
+            <Text variant="muted">{copy.noDates}</Text>
+          ) : (
+            assignments.map((a) => (
+              <DateRangeChip
+                key={a.id}
+                start={a.startDate}
+                end={a.endDate}
+                reviewing={a.isReviewing}
+                selected={selectedId === a.id}
+                onPress={() => onSelect(a.id)}
+              />
+            ))
+          )
+        }
+      </SectionState>
     </View>
   );
 }

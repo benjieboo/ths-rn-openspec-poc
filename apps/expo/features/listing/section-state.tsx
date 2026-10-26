@@ -5,7 +5,7 @@ import { View } from 'react-native';
 
 import { copy } from './copy';
 
-type QueryLike<T> = { data: T | undefined; isPending: boolean; error: ApiError | null; refetch: () => unknown };
+export type QueryLike<T> = { data: T | undefined; isPending: boolean; error: ApiError | null; refetch: () => unknown };
 
 type SectionStateProps<T> = {
   query: QueryLike<T>;

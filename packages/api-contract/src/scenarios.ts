@@ -1,6 +1,7 @@
 export const VIEWER_SCENARIOS = ['anonymous', 'partial-member', 'full-sitter', 'own-listing'] as const;
 export const DATA_SCENARIOS = [
   'all-assignments-reviewing',
+  'no-open-dates',
   'no-reviews',
   'no-amenities',
   'no-pets',
@@ -25,6 +26,7 @@ export const SCENARIO_DESCRIPTIONS: Record<ScenarioName, string> = {
   'full-sitter': 'Full sitter membership, can apply',
   'own-listing': "Viewing your own listing",
   'all-assignments-reviewing': 'Every date is under review',
+  'no-open-dates': 'Listing has no open dates',
   'no-reviews': 'Listing has no reviews',
   'no-amenities': 'Listing has no amenities',
   'no-pets': 'Listing has no pets',

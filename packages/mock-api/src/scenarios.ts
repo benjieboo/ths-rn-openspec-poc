@@ -5,6 +5,7 @@ import type { Dataset, SeedListing } from './dataset';
 // The only place that knows what data scenarios do. Handlers read the transformed dataset.
 const TRANSFORMS: Partial<Record<ScenarioSelection['data'][number], (l: SeedListing) => SeedListing>> = {
   'all-assignments-reviewing': (l) => ({ ...l, assignments: l.assignments.map((a) => ({ ...a, isReviewing: true })) }),
+  'no-open-dates': (l) => ({ ...l, assignments: [], sitEssentials: { ...l.sitEssentials, dates: [] } }),
   'no-reviews': (l) => ({ ...l, reviews: [] }),
   'no-amenities': (l) => ({ ...l, amenities: { highlights: [], categories: [] } }),
   'no-pets': (l) => ({ ...l, pets: [], responsibilities: { ...l.responsibilities, pets: [] } }),

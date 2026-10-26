@@ -351,6 +351,10 @@ export default function DesignSystemScreen() {
                 </OwnerCard>
               </Section>
 
+              <Section title="Sticky apply bar, summary only">
+                <StickyApplyBar summary={<Text variant="muted">No dates available right now</Text>} />
+              </Section>
+
               <Section title="Card, avatar, skeleton">
                 <Card>
                   <CardHeader>

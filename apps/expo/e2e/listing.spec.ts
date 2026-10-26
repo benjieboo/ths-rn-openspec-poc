@@ -70,3 +70,25 @@ test('New listing badge shows only when there are no reviews', async ({ page }, 
   await expect(page.getByTestId('listing-title')).toBeVisible();
   await expect(page.getByTestId('new-listing-badge')).toHaveCount(0);
 });
+
+// openspec: handle-no-open-dates › No open dates / Apply bar with no open dates / Sit essentials
+test('no open dates: no call to action, sit essentials stay, bar stays on mobile', async ({ page }, info) => {
+  await page.goto('/listing/2001?scenario=full-sitter,no-open-dates');
+  await expect(page.getByTestId('listing-title')).toBeVisible();
+  await expect(page.getByText('No dates available right now').first()).toBeVisible();
+  await expect(page.getByTestId('primary-cta')).toHaveCount(0);
+  if (info.project.name === 'mobile') {
+    await expect(page.getByRole('link', { name: 'Sit essentials' })).toBeVisible();
+    await page.mouse.wheel(0, 4000);
+    await expect(page.getByTestId('apply-bar-dates')).toBeInViewport();
+    await expect(page.getByTestId('apply-bar-dates')).toHaveText('No dates available right now');
+  } else {
+    await expect(page.getByText('Guests allowed (must be approved in advance)')).toBeVisible();
+  }
+  await page.screenshot({ path: `${SHOTS}/web-${info.project.name}-no-open-dates.png` });
+
+  // openspec: handle-no-open-dates › Notify me when dates open › Ask to be notified
+  await page.getByTestId('notify-me').click();
+  await expect(page.getByText("We'll let you know when dates open")).toBeVisible();
+  await expect(page.getByTestId('notify-me')).toHaveText("You'll be notified");
+});

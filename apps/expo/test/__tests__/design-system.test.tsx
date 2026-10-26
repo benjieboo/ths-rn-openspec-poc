@@ -1,6 +1,17 @@
-import { Button, PhotoViewer, RadioGroup, RadioGroupItem, Text, Textarea, TOAST_DURATION_MS, useToast } from '@ths/ui';
+import {
+  Button,
+  PhotoViewer,
+  RadioGroup,
+  RadioGroupItem,
+  StickyApplyBar,
+  Text,
+  Textarea,
+  TOAST_DURATION_MS,
+  useToast,
+} from '@ths/ui';
 import { act, fireEvent, screen } from '@testing-library/react-native';
 import * as React from 'react';
+import { StyleSheet } from 'react-native';
 
 import { renderWithProviders } from '../render';
 
@@ -31,6 +42,19 @@ describe('Core primitives', () => {
     renderWithProviders(<Textarea label="Details (optional)" />);
     expect(screen.getByText('Details (optional)')).toBeVisible();
     expect(screen.getByLabelText('Details (optional)')).toBeTruthy();
+  });
+});
+
+describe('StickyApplyBar', () => {
+  // openspec/changes/handle-no-open-dates/specs/design-system/spec.md
+  it('Summary only', () => {
+    renderWithProviders(<StickyApplyBar summary={<Text>No dates available right now</Text>} />);
+    expect(screen.getByText('No dates available right now')).toBeTruthy();
+    expect(screen.queryByRole('button')).toBeNull();
+    // Test safe area: 34 pt bottom inset.
+    let bar = screen.getByText('No dates available right now').parent;
+    while (bar && StyleSheet.flatten(bar.props.style)?.paddingBottom === undefined) bar = bar.parent;
+    expect(StyleSheet.flatten(bar?.props.style)?.paddingBottom).toBe(34);
   });
 });
 
