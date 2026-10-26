@@ -60,3 +60,13 @@ test('resize across the breakpoint keeps selected dates', async ({ page }, info)
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.getByTestId('apply-bar-dates')).toHaveText('10 – 24 Feb 27');
 });
+
+// openspec: add-new-listing-badge › Title block › "New listing" / "Listing with reviews"
+test('New listing badge shows only when there are no reviews', async ({ page }, info) => {
+  await page.goto('/listing/2001?scenario=no-reviews');
+  await expect(page.getByTestId('new-listing-badge')).toHaveText('New listing');
+  await page.screenshot({ path: `${SHOTS}/web-${info.project.name}-new-listing.png` });
+  await page.goto('/listing/2001');
+  await expect(page.getByTestId('listing-title')).toBeVisible();
+  await expect(page.getByTestId('new-listing-badge')).toHaveCount(0);
+});

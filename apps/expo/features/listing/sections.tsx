@@ -4,6 +4,7 @@ import type { Amenities, Assignment, Listing, Pet, Responsibilities, Review, Sit
 import {
   AmenityList,
   AnimalCountBadge,
+  Badge,
   Button,
   DateRangeChip,
   formatDateRange,
@@ -63,8 +64,13 @@ export function TitleBlock({ listing }: { listing: Listing }) {
         {listing.title}
       </Text>
       <Text variant="muted">{locationLine(listing.location)}</Text>
-      {listing.animals.length > 0 && (
-        <View className="flex-row flex-wrap gap-2 pt-1">
+      {(listing.animals.length > 0 || listing.reviewCount === 0) && (
+        <View className="flex-row flex-wrap items-center gap-2 pt-1">
+          {listing.reviewCount === 0 && (
+            <Badge variant="highlight" accessible accessibilityLabel={copy.newListing} testID="new-listing-badge">
+              <Text>{copy.newListing}</Text>
+            </Badge>
+          )}
           {listing.animals.map((a) => (
             <AnimalCountBadge key={a.species} species={a.species} count={a.count} />
           ))}

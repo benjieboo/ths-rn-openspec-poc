@@ -76,4 +76,13 @@ CLI: `npx openspec list`, `npx openspec validate --strict`.
 - [x] 2. Mock API + contract (scenarios, `/dev/scenarios`, `/dev/api`)
 - [x] 3. Listing spec (review gate)
 - [x] 4. Generate the Listing from the spec (screenshots in [docs/screenshots](docs/screenshots))
-- [ ] 5. Prove the loop with a spec-only change
+- [x] 5. Prove the loop with a spec-only change: `add-new-listing-badge`
+
+## The loop, shown
+
+`openspec/changes/archive/2026-10-26-add-new-listing-badge/` is the smallest complete example:
+
+1. Commit `3faf066` adds only the spec delta (MODIFIED Title block: "New listing" badge when there are no reviews).
+2. The implementation is 10 lines in two shared files (`copy.ts`, `sections.tsx`), with no platform-specific code.
+3. Jest and Playwright tests are named after the delta's scenarios; it shows on iOS, mobile web and desktop web (`docs/screenshots/*new-listing*`).
+4. Archiving merged the delta, so `openspec/specs/listing-view/spec.md` now describes the badge.

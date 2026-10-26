@@ -19,6 +19,8 @@ export const copy = {
     photos: 'Photos',
   },
 
+  newListing: 'New listing',
+
   loading: 'Loading listing',
 
   listingError: {

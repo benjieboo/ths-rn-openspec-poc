@@ -171,6 +171,22 @@ describe('Title block', () => {
   });
 });
 
+describe('Title block › New listing badge (add-new-listing-badge)', () => {
+  it.each([
+    ['phone', PHONE],
+    ['desktop', DESKTOP],
+  ])('New listing (%s)', async (_name, size) => {
+    await openListing({ scenario: 'no-reviews', size });
+    expect(screen.getByTestId('new-listing-badge')).toHaveTextContent(copy.newListing);
+    expect(screen.getByLabelText(copy.newListing)).toBeTruthy();
+  });
+
+  it('Listing with reviews', async () => {
+    await openListing();
+    expect(screen.queryByTestId('new-listing-badge')).toBeNull();
+  });
+});
+
 describe('Status banner', () => {
   it('All dates under review', async () => {
     await openListing({ scenario: 'all-assignments-reviewing' });
